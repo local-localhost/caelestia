@@ -19,7 +19,20 @@ if ! test -f $argv/hypr-user.conf
     set -l _reload true
 end
 
+# Ensure nwg-displays generated files exist so Hyprland can source them safely
+set -q XDG_CONFIG_HOME && set -l hypr_config $XDG_CONFIG_HOME/hypr || set -l hypr_config $HOME/.config/hypr
+
+if ! test -f $hypr_config/monitors.conf
+    touch -a $hypr_config/monitors.conf
+    set -l _reload true
+end
+
+if ! test -f $hypr_config/workspaces.conf
+    touch -a $hypr_config/workspaces.conf
+    set -l _reload true
+end
+
 # Reload as needed
-if _reload
+if test "$_reload" = true
     hyprctl reload
 end
