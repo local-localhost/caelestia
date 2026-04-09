@@ -1,42 +1,36 @@
 # caelestia
 
 This is the main repo of the caelestia dots and contains the user configs for
-apps. This repo also includes an install script to install the entire dots.
+apps.
 
 ## Installation
 
-Simply clone this repo and run the install script (you need
-[`fish`](https://github.com/fish-shell/fish-shell) installed).
-
-> [!WARNING]
-> The install script symlinks all configs into place, so you CANNOT
-> move/remove the repo folder once you run the install script. If
-> you do, most apps will not behave properly and some (e.g. Hyprland)
-> will fail to start completely. I recommend cloning the repo to
-> `~/.local/share/caelestia`.
-
-The install script has some options for installing configs for some apps.
-
-```
-$ ./install.fish -h
-usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--aur-helper]
-
-options:
-  -h, --help                  show this help message and exit
-  --noconfirm                 do not confirm package installation
-  --spotify                   install Spotify (Spicetify)
-  --vscode=[codium|code]      install VSCodium (or VSCode)
-  --discord                   install Discord (OpenAsar + Equicord)
-  --zen                       install Zen browser
-  --aur-helper=[yay|paru]     the AUR helper to use
-```
-
-For example:
+The official installation path for the full Caelestia setup is the
+[`caelestia-installer`](https://github.com/local-localhost/caelestia-installer)
+repository.
 
 ```sh
-git clone https://github.com/caelestia-dots/caelestia.git ~/.local/share/caelestia
-~/.local/share/caelestia/install.fish
+git clone https://github.com/local-localhost/caelestia-installer.git
+cd caelestia-installer
+bash install.sh
 ```
+
+Optional components can be installed during the same run:
+
+```sh
+bash install.sh -y --spotify --vscode codium --discord --zen
+```
+
+By default the installer keeps managed source checkouts in XDG-aware locations
+and symlinks configs from there. Advanced users can override the managed
+checkout locations via installer environment variables such as `DOTFILES_DIR`,
+`CLI_DIR`, `SHELL_DIR`, `DOTFILES_REPO_URL`, `CLI_REPO_URL`, and
+`SHELL_REPO_URL`.
+
+> [!NOTE]
+> The `install.fish` file in this repository is now only a compatibility shim
+> for older instructions. New installations should always start from
+> `caelestia-installer`.
 
 ### Manual installation
 
@@ -116,7 +110,12 @@ Finally, install the CaelestiaFox extension from [here](https://addons.mozilla.o
 
 ## Updating
 
-Simply run `yay` to update the AUR packages, then `cd` into the repo directory and run `git pull` to update the configs.
+If you installed the full setup through the official installer, rerun
+`caelestia-installer/install.sh`. It updates clean managed checkouts before
+reinstalling or relinking the relevant components.
+
+For manual installs, update the individual repos yourself and rerun the
+relevant installation steps.
 
 ## Usage
 
