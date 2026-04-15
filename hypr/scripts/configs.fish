@@ -19,8 +19,19 @@ if ! test -f $argv/hypr-user.conf
     set -l _reload true
 end
 
+# Ensure hypr-environment exists
+if ! test -f $argv/hypr-environment.conf
+    set -q XDG_CONFIG_HOME && set -l xdg_config $XDG_CONFIG_HOME || set -l xdg_config $HOME/.config
+    printf 'source = %s/hypr/environments/default.conf\n' $xdg_config >$argv/hypr-environment.conf
+    set -l _reload true
+end
+
 # Ensure nwg-displays generated files exist so Hyprland can source them safely
 set -q XDG_CONFIG_HOME && set -l hypr_config $XDG_CONFIG_HOME/hypr || set -l hypr_config $HOME/.config/hypr
+
+if ! test -d $hypr_config
+    mkdir -p $hypr_config
+end
 
 if ! test -f $hypr_config/monitors.conf
     touch -a $hypr_config/monitors.conf
